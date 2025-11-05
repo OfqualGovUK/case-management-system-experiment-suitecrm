@@ -43,7 +43,7 @@ stages:
           inputs:
             serviceConnectionEndpoint: 'snyk-integration-eu'
             testType: 'container'
-            dockerImageName: '$(SNYK_DOCKER_REPOS):latest'
+            dockerImageName: '$(registryPrefix)/$(SNYK_DOCKER_REPOS):latest'
             dockerfilePath: '$(dockerfilePath)'
             monitorWhen: 'always'
             severityThreshold: 'high'
