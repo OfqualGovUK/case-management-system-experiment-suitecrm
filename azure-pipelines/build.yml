@@ -57,7 +57,7 @@ stages:
     jobs:
       - job: BuildDev
         displayName: Build and Push to Dev ACR
-        condition: and(succeeded(), not(startsWith(variables['build.sourceBranch'], 'refs/heads/main')))
+        condition: and(succeeded(), or(startsWith(variables['build.sourceBranch'], 'refs/heads/releases'), startsWith(variables['build.sourceBranch'], 'refs/heads/main')))
         steps:
         - task: Docker@2
           inputs:
