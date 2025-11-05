@@ -18,7 +18,7 @@ stages:
             snyk auth $(SNYK_TOKEN)
             set +e
           displayName: Install and Authenticate Snyk CLI
-          
+
         - task: SnykSecurityScan@1
           displayName: 'Snyk scanning code'
           inputs:
@@ -48,6 +48,7 @@ stages:
             monitorWhen: 'always'
             severityThreshold: 'high'
             failOnIssues: false
+            containerRegistry: $(dockerRegistryServiceConnectionDev)
 
   - stage: Build
     displayName: Build and Push Docker Image
