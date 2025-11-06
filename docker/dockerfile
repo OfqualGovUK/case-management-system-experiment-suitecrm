@@ -1,6 +1,7 @@
 FROM crofqappdev1.azurecr.io/ofqual/suitecrm-bitnami:latest
 
 # Copy Ofqual extension files into the SuiteCRM extensions directory
-COPY SuiteCRM/extensions/Ofqual /bitnami/suitecrm/extensions/Ofqual
+COPY SuiteCRM/extensions/Ofqual /opt/bitnami/suitecrm/extensions/Ofqual
 
+WORKDIR /opt/bitnami/suitecrm
 
