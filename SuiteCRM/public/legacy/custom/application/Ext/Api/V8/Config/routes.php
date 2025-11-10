@@ -2,7 +2,7 @@
 
 use SuiteCRM\custom\application\Ext\Api\V8\Factory\OQParamsMiddlewareFactory;
 use Api\V8\Param;
-
+use LoggerManager;
 
 try {
 
@@ -62,4 +62,5 @@ try {
     )
         ->add($oqparamsFac->bind(SuiteCRM\custom\application\Ext\Api\V8\Param\OQGetUserParams::class));
 } catch (Exception $e) {
+    LoggerManager::getLogger()->error("Error loading OQ routes: " . $e->getMessage());
 }
