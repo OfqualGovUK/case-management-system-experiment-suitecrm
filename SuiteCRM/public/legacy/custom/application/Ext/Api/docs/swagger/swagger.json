@@ -904,7 +904,7 @@
       }
     },
     "/custom/oq-current-user": {
-      "delete": {
+      "get": {
         "tags": [
           "Current User"
         ],
