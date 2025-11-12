@@ -1,8 +1,13 @@
 FROM crofqappdev1.azurecr.io/ofqual/suitecrm-bitnami:latest
 
+# Modify the persistence configuration to exclude custom and themes folders from being symlinked
+# Keep symlinks for: .env.local, config files, uploads, and OAuth data (runtime/config data)
+# Remove symlinks for: custom and themes (version-controlled code)
+RUN sed -i 's|export SUITECRM_DATA_TO_PERSIST="${SUITECRM_DATA_TO_PERSIST:-$SUITECRM_BASE_DIR}"|export SUITECRM_DATA_TO_PERSIST="${SUITECRM_DATA_TO_PERSIST:-$SUITECRM_BASE_DIR/.env.local:$SUITECRM_BASE_DIR/public/legacy/config.php:$SUITECRM_BASE_DIR/public/legacy/config_override.php:$SUITECRM_BASE_DIR/public/legacy/upload:$SUITECRM_BASE_DIR/public/legacy/Api/V8/OAuth2}"|' /opt/bitnami/scripts/suitecrm-env.sh
+
 # Copy Ofqual extension files into the SuiteCRM extensions directory
 COPY SuiteCRM/extensions/Ofqual /opt/bitnami/suitecrm/extensions/Ofqual
-COPY SuiteCRM/public/legacy/. /opt/bitnami/suitecrm/public/legacy/
+COPY SuiteCRM/public/legacy/custom /opt/bitnami/suitecrm/public/legacy/custom
 
 WORKDIR /opt/bitnami/suitecrm
 
