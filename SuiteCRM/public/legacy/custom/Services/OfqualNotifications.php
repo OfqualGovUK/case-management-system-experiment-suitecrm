@@ -29,16 +29,16 @@ class OfqualNotifications
             $apiCredentials = [];
 
             $requiredCredentialKeys = [
-                'client_id',
-                'client_secret',
-                'grant_type',
+                'client-id',
+                'client-secret',
+                'grant-type',
                 'scope',
-                'token_endpoint',
-                'notification_api',
+                'token-endpoint',
+                'notification-api',
             ];
 
             foreach ($requiredCredentialKeys as $key) {
-                $keyStore = new EnvStore('notifications_' . $key);
+                $keyStore = new EnvStore('notifications-' . $key);
 
                 $value = $keyStore->getValue();
                 if ($value === false || empty($value)) {
@@ -50,9 +50,9 @@ class OfqualNotifications
 
             $tokenResponse = $this->httpClient->post($apiCredentials['token_endpoint'], [
                 'form_params' => [
-                    'client_id'     => $apiCredentials['client_id'],
-                    'client_secret' => $apiCredentials['client_secret'],
-                    'grant_type'    => $apiCredentials['grant_type'],
+                    'client_id'     => $apiCredentials['client-id'],
+                    'client_secret' => $apiCredentials['client-secret'],
+                    'grant_type'    => $apiCredentials['grant-type'],
                     'scope'         => $apiCredentials['scope'],
                 ],
             ]);
@@ -64,7 +64,7 @@ class OfqualNotifications
             }
             $accessToken = $tokenData['access_token'];
 
-            $requireddata = ['source_id' => 'SourceId', 'source_upn' => 'SourceUpn'];
+            $requireddata = ['source-id' => 'SourceId', 'source-upn' => 'SourceUpn'];
 
             $payloaddata = [
                 'SourceModule'  => 1,
@@ -73,7 +73,7 @@ class OfqualNotifications
             ];
 
             foreach ($requireddata as $key => $name) {
-                $keyStore = new EnvStore('notifications_' . $key);
+                $keyStore = new EnvStore('notifications-' . $key);
 
                 $value = $keyStore->getValue();
 
@@ -84,7 +84,7 @@ class OfqualNotifications
                 $payloaddata[$name] = $value;
             }
 
-            $notificationResponse = $this->httpClient->post($apiCredentials['notification_api'] . '/notifications', [
+            $notificationResponse = $this->httpClient->post($apiCredentials['notification-api'] . '/notifications', [
                 'json' => $payloaddata,
                 'timeout' => 10,
                 'headers' => [
