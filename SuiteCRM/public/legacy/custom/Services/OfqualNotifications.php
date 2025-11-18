@@ -48,7 +48,7 @@ class OfqualNotifications
                 $apiCredentials[$key] = $value;
             }
 
-            $tokenResponse = $this->httpClient->post($apiCredentials['token_endpoint'], [
+            $tokenResponse = $this->httpClient->post($apiCredentials['token-endpoint'], [
                 'form_params' => [
                     'client_id'     => $apiCredentials['client-id'],
                     'client_secret' => $apiCredentials['client-secret'],
