@@ -62,5 +62,5 @@ try {
     )
         ->add($oqparamsFac->bind(SuiteCRM\custom\application\Ext\Api\V8\Param\OQGetUserParams::class));
 } catch (Exception $e) {
-    LoggerManager::getLogger()->error("Error loading OQ routes: " . $e->getMessage());
+    \LoggerManager::getLogger()->error("Error loading OQ routes: " . $e->getMessage());
 }

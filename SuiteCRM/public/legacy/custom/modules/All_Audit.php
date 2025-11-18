@@ -18,7 +18,11 @@ class All_Audit
             $changed_fields = [];
 
             foreach ($bean->field_defs as $field_name => $field_def) {
-                if (isset($bean->$field_name) && $bean->fetched_row[$field_name] !== $bean->$field_name) {
+                if (
+                    isset($bean->$field_name) &&
+                    (!array_key_exists($field_name, $bean->fetched_row) ||
+                        $bean->fetched_row[$field_name] !== $bean->$field_name)
+                ) {
                     $changed_fields[$field_name] = $field_def;
                 }
             }
