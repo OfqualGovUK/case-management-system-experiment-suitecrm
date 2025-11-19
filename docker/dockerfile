@@ -8,6 +8,8 @@ RUN sed -i 's|export SUITECRM_DATA_TO_PERSIST="${SUITECRM_DATA_TO_PERSIST:-$SUIT
 # Copy Ofqual extension files into the SuiteCRM extensions directory
 COPY SuiteCRM/extensions/Ofqual /opt/bitnami/suitecrm/extensions/Ofqual
 COPY SuiteCRM/public/legacy/custom /opt/bitnami/suitecrm/public/legacy/custom
+COPY docker/startup.sh /opt/bitnami/scripts/suitecrm/startup.sh
+RUN chmod +x /opt/bitnami/scripts/suitecrm/startup.sh
 
 WORKDIR /opt/bitnami/suitecrm
 
