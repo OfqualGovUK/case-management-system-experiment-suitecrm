@@ -10,8 +10,8 @@ fi
 
 # generate the public key if it doesnt exist OR if the private key has just been generated.
 FILE2=/bitnami/suitecrm/public/legacy/Api/V8/OAuth2/public.key
-if [[ ! -f $FILE2 || $GENPRIV == "TRUE"]] ; then
-  openssl rsa -in $FILE1 -pubout $FILE2
+if [[ ! -f $FILE2 || $GENPRIV == "TRUE" ]] ; then
+  openssl rsa -in $FILE1 -pubout -out $FILE2
   echo "Generating Public Key"
 fi
 
