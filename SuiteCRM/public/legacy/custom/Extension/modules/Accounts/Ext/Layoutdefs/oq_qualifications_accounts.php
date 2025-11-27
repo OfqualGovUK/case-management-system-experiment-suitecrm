@@ -1,5 +1,5 @@
 <?php
-
+//define the subpanel layout for the Accounts module to include Qualifications
 $layout_defs['Accounts']['subpanel_setup']['oq_qualifications_accounts'] = array(
     'order' => 100,
     'module' => 'OQ_Qualifications',

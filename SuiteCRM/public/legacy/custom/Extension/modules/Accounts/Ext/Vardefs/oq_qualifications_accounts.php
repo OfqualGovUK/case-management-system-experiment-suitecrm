@@ -1,5 +1,5 @@
 <?php
-
+//define the link field in the Accounts module to relate to Qualifications
 $dictionary['Account']['fields']['oq_qualifications_accounts'] =
     array(
         'name' => 'oq_qualifications_accounts',

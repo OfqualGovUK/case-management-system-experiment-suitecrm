@@ -1,5 +1,5 @@
 <?php
-
+//define the subpanel layout for the Cases module to include Qualifications
 $layout_defs['Cases']['subpanel_setup']['oq_qualifications_cases'] = array(
     'order' => 100,
     'module' => 'OQ_Qualifications',

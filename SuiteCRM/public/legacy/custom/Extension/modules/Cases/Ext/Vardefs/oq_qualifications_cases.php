@@ -1,4 +1,5 @@
 <?php
+//define the link field in the Cases module to relate to Qualifications
 $dictionary['Case']['fields']['oq_qualifications_cases'] = array(
     'name' => 'oq_qualifications_cases',
     'type' => 'link',

@@ -1,22 +1,24 @@
 <?php
+// define the relationship metadata for Qualifications and Accounts
+// the name of the relationship is oq_qualifications_accounts
 $dictionary['oq_qualifications_accounts'] = array(
-    'true_relationship_type' => 'one-to-many',
+    'true_relationship_type' => 'one-to-many', // enforces one-to-many relationship
     'relationships' => array(
         'oq_qualifications_accounts' => array(
-            'lhs_module' => 'Accounts',
+            'lhs_module' => 'Accounts', //Accounts has multiple Qualifications
             'lhs_table' => 'accounts',
-            'lhs_key' => 'id',
-            'rhs_module' => 'OQ_Qualifications',
+            'lhs_key' => 'id', //which field to use as key
+            'rhs_module' => 'OQ_Qualifications', //Qualifications have a single Account
             'rhs_table' => 'oq_qualifications',
             'rhs_key' => 'id',
-            'relationship_type' => 'many-to-many',
-            'join_table' => 'oq_qualifications_accounts_c',
-            'join_key_rhs' => 'oq_qualifications_accountsoq_qualifications_ida',
+            'relationship_type' => 'many-to-many', //a one-to-many is a special case of many-to-many
+            'join_table' => 'oq_qualifications_accounts_c', //this is the table that stores the relationship
+            'join_key_rhs' => 'oq_qualifications_accountsoq_qualifications_ida', //field in join_table that points to RHS
             'join_key_lhs' => 'oq_qualifications_accountsaccounts_idb',
         ),
     ),
-    'table' => 'oq_qualifications_accounts_c',
-    'fields' => array(
+    'table' => 'oq_qualifications_accounts_c', //the actual table used to store the relationship
+    'fields' => array( //the fields that make up the table
         0 => [
             'name' => 'id',
             'type' => 'varchar',
@@ -44,7 +46,7 @@ $dictionary['oq_qualifications_accounts'] = array(
             'len' => 36,
         ],
     ),
-    'indices' => array(
+    'indices' => array( //the indices for the table
         0 => array(
             'name' => 'oq_qualifications_accountsspk',
             'type' => 'primary',
