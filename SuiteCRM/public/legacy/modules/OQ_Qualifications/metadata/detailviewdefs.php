@@ -54,7 +54,7 @@ $viewdefs['OQ_Qualifications'] =
           ['eqf_level', 'type'],
           ['total_credits', 'regulation_start_date'],
           ['operational_start_date', 'operational_end_date'],
-          ['assigned_user_name'],
+          ['assigned_user_name', 'oq_qualifications_accounts_name'],
           ['date_entered', 'date_modified'],
 
         ),
