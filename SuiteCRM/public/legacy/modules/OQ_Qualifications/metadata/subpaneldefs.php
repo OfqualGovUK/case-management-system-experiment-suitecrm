@@ -18,3 +18,20 @@ $layout_defs[$module]['subpanel_setup']['securitygroups'] = [
     'refresh_page' => 1,
     'add_subpanel_data' => 'securitygroup_id',
 ];
+
+$layout_defs[$module]['subpanel_setup']['oq_qualifications_cases'] = [
+    'top_buttons' => [
+        [
+            'widget_class' => 'SubPanelTopSelectButton',
+            'mode' => 'MultiSelect',
+        ],
+    ],
+    'module' => 'Cases',
+    'subpanel_name' => 'default',
+    'get_subpanel_data' => 'oq_qualifications_cases',
+    'title_key' => 'LBL_QUALIFICATIONS_CASES_SUBPANEL_TITLE',
+    'order' => 100,
+    'sort_order' => 'asc',
+    'sort_by' => 'name',
+
+];

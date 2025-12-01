@@ -11,10 +11,7 @@ $subpanel_layout = array(
         array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
     ),
 
-
     'where' => '',
-
-    'fill_in_additional_fields' => true,
 
     'list_fields' => array(
         'name' => array(
@@ -28,14 +25,6 @@ $subpanel_layout = array(
             'width' => '6%',
         ),
 
-        'account_name' => array(
-            'vname' => 'LBL_LIST_ACCOUNT_NAME',
-            'widget_class' => 'SubPanelDetailViewLink',
-            'module' => 'Accounts',
-            'width' => '31%',
-            'target_record_key' => 'account_id',
-            'target_module' => 'Accounts',
-        ),
         'type' => array(
             'vname' => 'LBL_TYPE',
             'width' => '10%',

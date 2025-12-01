@@ -1,0 +1,2 @@
+<?php
+$mod_strings['LBL_OQ_QUALIFICATIONS_CASES_FROM_OQ_QUALIFICATIONS_TITLE'] = 'Qualifications';

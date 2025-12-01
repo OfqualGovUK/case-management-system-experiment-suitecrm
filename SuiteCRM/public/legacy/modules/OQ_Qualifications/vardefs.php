@@ -115,6 +115,49 @@ $dictionary['OQ_Qualifications'] = array(
         ),
 
         // ... additional field definitions ...
+        'oq_qualifications_cases' =>
+        array(
+            'name' => 'oq_qualifications_cases',
+            'vname' => 'LBL_OQ_QUALIFICATIONS_CASES_FROM_CASES_TITLE',
+            'type' => 'link',
+            'relationship' => 'oq_qualifications_cases',
+            'module' => 'Cases',
+            'bean_name' => 'Case',
+            'source' => 'non-db',
+        ),
+
+        'oq_qualifications_accounts' => array(
+            'name' => 'oq_qualifications_accounts',
+            'type' => 'link',
+            'relationship' => 'oq_qualifications_accounts',
+            'source' => 'non-db',
+            'module' => 'Accounts',
+            'bean_name' => 'Account',
+            'vname' => 'LBL_OQ_QUALIFICATIONS_ACCOUNTS_FROM_OQ_QUALIFICATIONS_TITLE',
+            'id_name' => 'oq_qualifications_accountsoq_qualifications_ida',
+        ),
+        'oq_qualifications_accounts_name' => array(
+            'name' => 'oq_qualifications_accounts_name',
+            'rname' => 'name',
+            'id_name' => 'oq_qualifications_accountsoq_qualifications_ida',
+            'vname' => 'LBL_OQ_QUALIFICATIONS_ACCOUNTS_FROM_OQ_QUALIFICATIONS_TITLE',
+            'type' => 'relate',
+            'link' => 'oq_qualifications_accounts',
+            'table' => 'accounts',
+            'module' => 'Accounts',
+            'source' => 'non-db',
+            'save' => true,
+        ),
+        'oq_qualifications_accountsoq_qualifications_ida' => array(
+            'name' => 'oq_qualifications_accountsoq_qualifications_ida',
+            'type' => 'link',
+            'relationship' => 'oq_qualifications_accounts',
+            'source' => 'non-db',
+            'side' => 'right',
+            'reportable' => false,
+            'vname' => 'LBL_OQ_QUALIFICATIONS_ACCOUNTS_FROM_OQ_QUALIFICATIONS_TITLE_ID',
+
+        ),
     ),
     'relationships' => array(),
     'optimistic_locking' => true,
