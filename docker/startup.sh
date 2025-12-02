@@ -22,8 +22,8 @@ fi
 
 cd /opt/bitnami/suitecrm
 
-php bin/console cache:clear
 php bin/console scrm:quick-repair-and-rebuild
+php bin/console cache:clear
 
 # reset permissions again as we are root at this stage
 
