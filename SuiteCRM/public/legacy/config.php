@@ -298,7 +298,7 @@ $sugar_config = array(
     'l s f' => 'l s f',
     'l f s' => 'l f s',
   ),
-  'oauth2_encryption_key' => getenv('SUITECRM_OAUTH2_ENCRYPTION_KEY', true),
+  'oauth2_encryption_key' => getenv('SUITECRM_OAUTH_ENCRYPTION_KEY', true),
   'passwordsetting' =>
   array(
     'SystemGeneratedPasswordON' => '',
