@@ -1,13 +1,19 @@
 #!/bin/sh
 FILE1=/var/www/html/public/legacy/Api/V8/OAuth2/private.key
 FILE2=/var/www/html/public/legacy/Api/V8/OAuth2/public.key  
+GENFILE1=/persisted/keys/private.key
+GENFILE2=/persisted/keys/public.key
+
 ENVFILE=/var/www/html/suiteenv.env
 echo "Starting SuiteCRM Bootstrap..." > /dev/stdout 2>&1
 if [ -z "$APP_SECRET" ] && [ -n "$SUITECRM_DATABASE_HOST" ]; then
     echo "Starting SuiteCRM Initial Setup..." > /dev/stdout 2>&1
-    openssl genrsa -out $FILE1 2048 > /dev/stdout 2>&1
-    openssl rsa -in $FILE1 -pubout -out $FILE2 > /dev/stdout 2>&1
+    openssl genrsa -out $GENFILE1 2048 > /dev/stdout 2>&1
+    openssl rsa -in $GENFILE1 -pubout -out $GENFILE2 > /dev/stdout 2>&1
     
+    ln -s $GENFILE1 $FILE1
+    ln -s $GENFILE2 $FILE2
+
     cd /var/www/html/
     /usr/local/bin/php /var/www/html/bin/console suitecrm:app:install -W true -u $SUITECRM_USERNAME -p $SUITECRM_PASSWORD -U $SUITECRM_DATABASE_USER -P $SUITECRM_DATABASE_PASSWORD -H $SUITECRM_DATABASE_HOST -N $SUITECRM_DATABASE_NAME -S http://localhost:8080/ > /dev/stdout 2>&1
     chmod 660 $FILE1 $FILE2
@@ -27,7 +33,14 @@ if [ -z "$APP_SECRET" ] && [ -n "$SUITECRM_DATABASE_HOST" ]; then
     fi    
     echo "SuiteCRM Initial Setup Complete." > /dev/stdout 2>&1
 fi
-if [ -n "$OAUTH_PRIVKEY" ]; then
+
+if [ ! -f $FILE1 ] && [ -f $GENFILE1 ]; then
+    ln -s $GENFILE1 $FILE1
+    ln -s $GENFILE2 $FILE2
+
+fi
+
+if [ ! -f $FILE1 ] && [ -n "$OAUTH_PRIVKEY" ]; then
     echo "Setting OAuth2 Keys from Environment Variables..." > /dev/stdout 2>&1
     echo "$OAUTH_PRIVKEY" > $FILE1
     echo "$OAUTH_PUBKEY" > $FILE2
@@ -47,6 +60,8 @@ fi
 /usr/local/bin/php /var/www/html/bin/console cache:clear
 /usr/local/bin/php /var/www/html/bin/console scrm:quick-repair-and-rebuild
 /usr/local/bin/php /var/www/html/bin/console cache:clear
+
+# The Quick repair and rebuild, regenerates the config.php, overwriting the file with actual values instead of getenv.
 
 if [ -z "$DEBUG" ]; then
     echo "moving config into place" > /dev/stdout 2>&1
