@@ -1,0 +1,58 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/dockerfile
+    container_name: SuiteCRM-php
+    env_file:
+      - ./docker/suiteenv.env
+    environment:
+      PHP_POST_MAX_SIZE: "500M"
+      PHP_UPLOAD_MAX_FILE_SIZE: "500M"
+      PHP_MEMORY_LIMIT: "512M"
+      SSL_MODE: "mixed"
+      APACHE_DOCUMENT_ROOT: "/var/www/html/public"
+      notifications-client-id: "<setme>"
+      notifications-client-secret: "<setme>"
+      notifications-scope: "<setme>"
+      notifications-token-endpoint: "<setme>"
+      notifications_notification_api: "<setme>"
+      notifications-source-id: "<setme>"
+      notifications-source-upn: "<setme>"
+      notifications-grant-type: "<setme>"
+      SUITECRM_DATABASE_USER: "suitecrmuser"
+      SUITECRM_DATABASE_PASSWORD: "suitecrmpassword"
+      SUITECRM_DATABASE_HOST: "SuiteCRM-mysqldb"
+      SUITECRM_DATABASE_NAME: "suitecrm"
+      SUITECRM_DATABASE_PORT_NUMBER: "3306"
+      SUITECRM_USERNAME: "admin"
+      SUITECRM_PASSWORD: "Admin123!"
+      LOCAL_DEV: "true"
+    ports:
+      - 8080:8080
+      - 8443:8443
+    volumes:
+      - suitedata:/persisted/
+      - ./docker/suiteenv.env:/var/www/html/suiteenv.env
+    depends_on:
+      - mysqldb
+    networks:
+      - suitecrm-network
+  mysqldb:
+    image: mysql:8.0.44-debian
+    container_name: SuiteCRM-mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: suitecrm
+      MYSQL_USER: suitecrmuser
+      MYSQL_PASSWORD: suitecrmpassword      
+    volumes:
+      - db2_data:/var/lib/mysql
+    networks:
+      - suitecrm-network
+volumes:
+  db2_data:
+  suitedata:
+networks:
+  suitecrm-network:
+    driver: bridge

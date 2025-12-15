@@ -93,6 +93,7 @@ $sugar_config = array(
     'max_cron_jobs' => 10,
     'max_cron_runtime' => 30,
     'min_cron_interval' => 30,
+    'allowed_cron_users' => array('www-data'),
   ),
   'dashlet_auto_refresh_min' => 30,
   'dashlet_display_row_options' =>
@@ -435,7 +436,7 @@ $sugar_config = array(
     16 => 'phtml',
     17 => 'phar',
   ),
-  'upload_dir' => 'upload/',
+  'upload_dir' => '/persistence/uploads/',
   'upload_maxsize' => 30000000,
   'use_common_ml_dir' => false,
   'use_real_names' => true,
@@ -459,4 +460,10 @@ $sugar_config = array(
   'verify_client_ip' => true,
   'web_to_lead_allowed_redirect_hosts' =>
   array(),
+  'test_email_limit' => 50,
+  'max_temp_file_lifetime' => '72 hour',
+  'max_temp_file_batch_per_table' => '50',
+  'campaign_emails_per_run_default' => '50',
+  'campaign_marketing_emails_per_run_default' => 3,
+  'trackers_enabled' => true,
 );

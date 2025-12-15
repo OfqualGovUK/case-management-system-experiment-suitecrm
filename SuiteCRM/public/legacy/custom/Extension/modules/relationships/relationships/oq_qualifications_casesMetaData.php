@@ -17,7 +17,7 @@ $dictionary['oq_qualifications_cases'] = array(
     ),
     'table' => 'oq_qualifications_cases_c',
     'fields' => array(
-        0=> [
+        0 => [
             'name' => 'id',
             'type' => 'varchar',
             'len' => 36,
@@ -60,7 +60,6 @@ $dictionary['oq_qualifications_cases'] = array(
                 1 => 'oq_qualifications_casescases_idb',
             ),
         ),
-       
-        ),
+
     ),
 );

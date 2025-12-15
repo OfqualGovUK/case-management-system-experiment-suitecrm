@@ -1,0 +1,12 @@
+#!/command/with-contenv sh
+if [ -z "$SCHEDULE_REPEAT_TIME" ]; then
+  SLEEP=60
+else
+  SLEEP=$SCHEDULE_REPEAT_TIME
+fi
+echo "Starting SuiteCRM Scheduled Tasks Runner..." > /dev/stdout 2>&1
+while true; do
+    sleep $SLEEP    
+  /usr/local/bin/php /var/www/html/bin/console schedulers:run > /dev/stdout 2>&1
+  
+done
