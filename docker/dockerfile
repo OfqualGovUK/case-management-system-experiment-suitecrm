@@ -1,23 +1,28 @@
-FROM crofqappdev1.azurecr.io/ofqual/suitecrm-bitnami:latest
+FROM serversideup/php:8.3-fpm-apache-debian 
 
-# Modify the persistence configuration to exclude custom and themes folders from being symlinked
-# Keep symlinks for: .env.local, config files, uploads, and OAuth data (runtime/config data)
-# Remove symlinks for: custom and themes (version-controlled code)
-RUN sed -i 's|export SUITECRM_DATA_TO_PERSIST="${SUITECRM_DATA_TO_PERSIST:-$SUITECRM_BASE_DIR}"|export SUITECRM_DATA_TO_PERSIST="${SUITECRM_DATA_TO_PERSIST:-$SUITECRM_BASE_DIR/.env.local:$SUITECRM_BASE_DIR/public/legacy/config.php:$SUITECRM_BASE_DIR/public/legacy/config_override.php:$SUITECRM_BASE_DIR/public/legacy/upload:$SUITECRM_BASE_DIR/public/legacy/Api/V8/OAuth2}"|' /opt/bitnami/scripts/suitecrm-env.sh
+USER root 
+ARG SUITEVERSION=8-9-1
+RUN apt-get update && apt-get install -y mariadb-client wget vim iputils-ping curl ca-certificates gnupg lsb-release \
+    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
+    && rm -rf /var/lib/apt/lists/*
+RUN install-php-extensions gd zip mysqli opcache bcmath intl curl xml json mbstring pdo pdo_mysql openssl soap tokenizer zip imap ldap 
 
-# Copy Ofqual extension files into the SuiteCRM extensions directory
-COPY SuiteCRM/extensions/Ofqual /opt/bitnami/suitecrm/extensions/Ofqual
-COPY SuiteCRM/public/legacy/custom/. /opt/bitnami/suitecrm/public/legacy/custom/
-COPY SuiteCRM/public/legacy/modules/. /opt/bitnami/suitecrm/public/legacy/modules/
-COPY SuiteCRM/public/legacy/config.php /opt/bitnami/suitecrm/public/legacy/config.php
+WORKDIR /var/www/html 
 
-COPY docker/startup.sh /opt/bitnami/scripts/suitecrm/startup.sh
-RUN chmod +x /opt/bitnami/scripts/suitecrm/startup.sh
+ADD https://suitecrm.com/download/166/suite89/565627/suitecrm-$SUITEVERSION.zip  /var/www/html 
+RUN unzip suitecrm-$SUITEVERSION.zip && rm suitecrm-$SUITEVERSION.zip
+COPY --chown=www-data:www-data SuiteCRM/extensions/Ofqual /var/www/html/extensions/Ofqual/ 
+COPY --chown=www-data:www-data SuiteCRM/public/legacy/custom/. /var/www/html/public/legacy/custom
+COPY --chown=www-data:www-data SuiteCRM/public/legacy/modules/. /var/www/html/public/legacy/modules
 
-WORKDIR /opt/bitnami/suitecrm
+COPY scripts/startup.sh /var/www/scripts/startup.sh 
+COPY scripts/s6/. /etc/s6-overlay/s6-rc.d/
+RUN chmod +x /var/www/scripts/startup.sh 
 
-# Set correct permissions on all files and directories
-RUN chown -R daemon:daemon . && \
-    find . -type d -not -perm 2755 -exec chmod 2755 {} \; && \
-    find . -type f -not -perm 0644 -exec chmod 0644 {} \; && \
-    chmod +x bin/console
+COPY --chown=www-data:www-data SuiteCRM/public/legacy/config-interim.php /var/www/html/public/legacy/config-interim.php
+
+RUN find /var/www/html/. -type d -not -perm 2755 -exec chmod 2755 {} \; && \ 
+    find /var/www/html/. -type f -not -perm 0644 -exec chmod 0644 {} \; && \ 
+    find /var/www/html/. ! -user www-data -exec chown www-data:www-data {} \;  
+
+USER www-data
