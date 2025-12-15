@@ -24,5 +24,6 @@ COPY --chown=www-data:www-data SuiteCRM/public/legacy/config-interim.php /var/ww
 RUN find /var/www/html/. -type d -not -perm 2755 -exec chmod 2755 {} \; && \ 
     find /var/www/html/. -type f -not -perm 0644 -exec chmod 0644 {} \; && \ 
     find /var/www/html/. ! -user www-data -exec chown www-data:www-data {} \;  
+RUN chmod +x /var/www/html/bin/console
 
 USER www-data

@@ -36,11 +36,20 @@ fi
 if [ ! -d "/persisted/uploads" ]; then
     mkdir -p /persisted/uploads
 fi
+
 if [ -z "$DEBUG" ]; then
-    mv /var/www/html/public/legacy/config-interim.php /var/www/html/public/legacy/config.php
+    echo "moving config into place" > /dev/stdout 2>&1
+    rm -f /var/www/html/public/legacy/config.php
+    cp -v /var/www/html/public/legacy/config-interim.php /var/www/html/public/legacy/config.php > /dev/stdout 2>&1
 fi
 
 # run the cache:clear twice becuase there is an interdependency issue.
 /usr/local/bin/php /var/www/html/bin/console cache:clear
 /usr/local/bin/php /var/www/html/bin/console scrm:quick-repair-and-rebuild
 /usr/local/bin/php /var/www/html/bin/console cache:clear
+
+if [ -z "$DEBUG" ]; then
+    echo "moving config into place" > /dev/stdout 2>&1
+    rm -f /var/www/html/public/legacy/config.php
+    cp -v /var/www/html/public/legacy/config-interim.php /var/www/html/public/legacy/config.php > /dev/stdout 2>&1
+fi
