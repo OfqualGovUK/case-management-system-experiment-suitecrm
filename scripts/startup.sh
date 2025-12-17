@@ -59,6 +59,7 @@ fi
 # run the cache:clear twice becuase there is an interdependency issue.
 /usr/local/bin/php /var/www/html/bin/console cache:clear
 /usr/local/bin/php /var/www/html/bin/console scrm:quick-repair-and-rebuild
+/usr/local/bin/php /var/www/html/bin/console scrm:repair-menus
 /usr/local/bin/php /var/www/html/bin/console cache:clear
 
 # The Quick repair and rebuild, regenerates the config.php, overwriting the file with actual values instead of getenv.
