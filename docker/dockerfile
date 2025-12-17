@@ -16,7 +16,7 @@ COPY --chown=www-data:www-data SuiteCRM/public/legacy/custom/. /var/www/html/pub
 COPY --chown=www-data:www-data SuiteCRM/public/legacy/modules/. /var/www/html/public/legacy/modules
 
 COPY scripts/startup.sh /var/www/scripts/startup.sh
-COPY scripts/99-mountperms.sh /etc/entrypoint.d/99-mountperms.sh
+# COPY scripts/99-mountperms.sh /etc/entrypoint.d/99-mountperms.sh
 COPY --chown=www-data:www-data scripts/repairrebuild.sh /var/www/html/repairrebuild.sh
 COPY --chown=www-data:www-data scripts/htaccess /var/www/html/public/legacy/.htaccess
 RUN chmod +x /var/www/html/repairrebuild.sh
