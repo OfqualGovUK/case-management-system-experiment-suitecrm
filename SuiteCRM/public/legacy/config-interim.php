@@ -436,7 +436,7 @@ $sugar_config = array(
     16 => 'phtml',
     17 => 'phar',
   ),
-  'upload_dir' => '/persistence/uploads/',
+  'upload_dir' => '/persisted/uploads/',
   'upload_maxsize' => 30000000,
   'use_common_ml_dir' => false,
   'use_real_names' => true,
