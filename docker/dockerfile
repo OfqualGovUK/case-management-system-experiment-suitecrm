@@ -5,7 +5,7 @@ ARG SUITEVERSION=8-9-1
 RUN apt-get update && apt-get install -y mariadb-client wget vim iputils-ping curl ca-certificates gnupg lsb-release \
     && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && rm -rf /var/lib/apt/lists/*
-RUN install-php-extensions gd zip mysqli opcache bcmath intl curl xml json mbstring pdo pdo_mysql openssl soap tokenizer zip imap ldap 
+RUN install-php-extensions gd zip mysqli opcache bcmath intl curl xml json mbstring pdo pdo_mysql openssl soap tokenizer zip imap ldap apcu
 
 WORKDIR /var/www/html 
 
