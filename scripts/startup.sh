@@ -16,6 +16,7 @@ if [ -z "$APP_SECRET" ] && [ -n "$SUITECRM_DATABASE_HOST" ]; then
 
     cd /var/www/html/
     /usr/local/bin/php /var/www/html/bin/console suitecrm:app:install -W true -u $SUITECRM_USERNAME -p $SUITECRM_PASSWORD -U $SUITECRM_DATABASE_USER -P $SUITECRM_DATABASE_PASSWORD -H $SUITECRM_DATABASE_HOST -N $SUITECRM_DATABASE_NAME -S http://localhost:8080/ > /dev/stdout 2>&1
+    chown www-data:www-data $FILE1 $FILE2
     chmod 660 $FILE1 $FILE2
     chmod +x bin/console
     
@@ -37,6 +38,8 @@ fi
 if [ ! -f $FILE1 ] && [ -f $GENFILE1 ]; then
     ln -s $GENFILE1 $FILE1
     ln -s $GENFILE2 $FILE2
+    chown www-data:www-data $FILE1 $FILE2
+    chmod 660 $FILE1 $FILE2
 
 fi
 
@@ -44,6 +47,7 @@ if [ ! -f $FILE1 ] && [ -n "$OAUTH_PRIVKEY" ]; then
     echo "Setting OAuth2 Keys from Environment Variables..." > /dev/stdout 2>&1
     echo "$OAUTH_PRIVKEY" > $FILE1
     echo "$OAUTH_PUBKEY" > $FILE2
+    chown www-data:www-data $FILE1 $FILE2
     chmod 660 $FILE1 $FILE2
 fi 
 if [ ! -d "/persisted/uploads" ]; then
